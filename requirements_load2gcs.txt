@@ -1,0 +1,2 @@
+google-cloud-storage==1.32.0
+#pandas-gbq==0.14.0 This is required if already not in your environment

@@ -1,0 +1,33 @@
+export GOOGLE_APPLICATION_CREDENTIALS="Path to Service Account JSON"
+
+#Dataflow Job
+python json_load_bq.py \
+--input_file gs://slalom-de/json/test_comp.json \
+--bq_table composition \
+--runner DataflowRunner \
+--project slalom-de \
+--temp_location gs://slalom-de/temp \
+--region us-central1
+
+#sqlite load
+python load_users_ba.py \
+--sqlite_file /home/vijay_gopu/slalom-de/data/user.sqlite \
+--credentials_file /home/vijay_gopu/slalom-de-911419ed4b1d.json
+
+#create a file review by biz file in GCS
+python load_mean_rev_by_biz.py \
+--output_file output/csv/mean_reviews_by_biz.csv \
+--bucket_name slalom-de \
+--credentials_file /home/vijay_gopu/slalom-de-911419ed4b1d.json
+
+#create a file review by zip file in GCS
+python load_mean_rev_by_zip.py \
+--output_file output/csv/mean_reviews_by_zip.csv \
+--bucket_name slalom-de \
+--credentials_file /home/vijay_gopu/slalom-de-911419ed4b1d.json
+
+#create a file for top10 reviewers in GCS
+python load_top5_active_reviewers.py \
+--output_file output/csv/top10_active_reviewers.csv \
+--bucket_name slalom-de \
+--credentials_file /home/vijay_gopu/slalom-de-911419ed4b1d.json
